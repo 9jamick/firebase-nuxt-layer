@@ -78,7 +78,6 @@
       </div>
     </UCard>
 
-    <!-- Users List -->
     <UCard class="bg-white border border-gray-200 shadow-sm">
       <template #header>
         <h2 class="text-xl font-semibold text-gray-900">Users List</h2>
@@ -110,21 +109,18 @@
       </div>
     </UCard>
 
-    <!-- Contacts Modal -->
     <UModal v-model="showContactsModal">
       <UCard class="bg-white">
         <template #header>
           <h3 class="text-lg font-semibold text-gray-900">Contacts for {{ selectedUserName }}</h3>
         </template>
         <div class="space-y-4">
-          <!-- Add Contact Form -->
           <div class="flex gap-2">
             <UInput v-model="newContact.type" placeholder="Type (phone, email)" class="flex-1" />
             <UInput v-model="newContact.value" placeholder="Value" class="flex-1" />
             <UButton @click="handleAddContact" color="primary" size="sm">Add</UButton>
           </div>
 
-          <!-- Contacts List -->
           <div v-if="Object.keys(contacts).length === 0" class="text-center text-gray-500 py-4">
             No contacts yet
           </div>

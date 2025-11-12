@@ -49,14 +49,38 @@
         </ul>
 
         <div class="absolute bottom-4 left-0 right-0 px-3">
-          <div class="p-3 bg-primary-50 rounded-lg border border-primary-200">
-            <p class="text-xs text-primary-800 font-semibold mb-1">Firebase Status</p>
+          <div 
+            :class="[
+              'p-3 rounded-lg border transition-colors',
+              firebaseConnected 
+                ? 'bg-green-50 border-green-200' 
+                : 'bg-red-50 border-red-200'
+            ]"
+          >
+            <p 
+              :class="[
+                'text-xs font-semibold mb-1',
+                firebaseConnected ? 'text-green-800' : 'text-red-800'
+              ]"
+            >
+              Firebase Status
+            </p>
             <div class="flex items-center">
               <span class="flex h-2 w-2 relative">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                <span 
+                  v-if="firebaseConnected"
+                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+                ></span>
+                <span 
+                  :class="[
+                    'relative inline-flex rounded-full h-2 w-2',
+                    firebaseConnected ? 'bg-green-500' : 'bg-red-500'
+                  ]"
+                ></span>
               </span>
-              <span class="ml-2 text-xs text-gray-600">Emulator Running</span>
+              <span class="ml-2 text-xs text-gray-600">
+                {{ firebaseConnected ? 'Emulator Connected' : 'Emulator Disconnected' }}
+              </span>
             </div>
           </div>
         </div>
@@ -101,6 +125,28 @@ const pageTitle = computed(() => {
       return 'Companies Management'
     default:
       return 'Admin Panel'
+  }
+})
+
+const firebaseConnected = ref(false)
+let connectionCheckInterval: NodeJS.Timeout | null = null
+
+const checkConnection = async () => {
+  try {
+    firebaseConnected.value = await checkFirebaseConnection()
+  } catch (error) {
+    firebaseConnected.value = false
+  }
+}
+
+onMounted(() => {
+  checkConnection()
+  connectionCheckInterval = setInterval(checkConnection, 5000)
+})
+
+onUnmounted(() => {
+  if (connectionCheckInterval) {
+    clearInterval(connectionCheckInterval)
   }
 })
 </script>

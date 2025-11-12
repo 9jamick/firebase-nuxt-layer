@@ -4,7 +4,4 @@ export default defineAppConfig({
     gray: 'neutral',
   },
   nuxtIcon: {},
-  // colorMode: {
-    // preference: 'light'
-  // }
 })

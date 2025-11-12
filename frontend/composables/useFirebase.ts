@@ -23,6 +23,20 @@ export const useFirebase = () => {
   return { app, database }
 }
 
+export const checkFirebaseConnection = async (): Promise<boolean> => {
+  const { database } = useFirebase()
+  if (!database) return false
+  
+  try {
+    const testRef = dbRef(database, '/')
+    await get(testRef)
+    return true
+  } catch (error) {
+    console.error('Firebase connection check failed:', error)
+    return false
+  }
+}
+
 export const createUser = async (userData: { name: string; email: string }) => {
   const { database } = useFirebase()
   if (!database) throw new Error('Database not initialized')
