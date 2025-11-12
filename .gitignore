@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Nuxt build
+.nuxt/
+.output/
+dist/
+
+# Firebase
+firebase-debug.log
+firestore-debug.log
+database-debug.log
+ui-debug.log
+*.log
+
+# Functions build
+functions/lib/
+functions/node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Env
+.env
+.env.local
+
+# Misc
+*.lock
+pnpm-lock.yaml
+package-lock.json
+
